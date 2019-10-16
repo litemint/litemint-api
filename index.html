@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sample Litemint App</title>
+</head>
+<body>
+    <h1 id="greeting"></h1>  
+    <h3 id="scoreResult"></h3>
+    <p id="userInfo"></p>
+
+    <script src="litemint.api.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Call once when your app is ready to display
+            // (e.g. in DOMContentLoaded event).    
+            Litemint.initialize();
+
+            // Retrieve the current user token.
+            Litemint.getToken().then(token => {
+                // If the token is valid a user object is returned.
+                // Optional set onlyFederated to true if your game requires accounts with gamer ID.
+                const onlyFederated = false;
+                Litemint.validateToken(token, onlyFederated)
+                .then(user => {
+                    document.getElementById("greeting").innerHTML = "Hello " + (user.id || user.address);
+                    document.getElementById("userInfo").innerHTML = JSON.stringify(user);
+
+                    // Submit a score to the leaderboards.
+                    // It is recommended to do so from your game server to prevent cheating.
+                    const scoreToSubmit = 700;
+                    Litemint.submitScore(token, scoreToSubmit, onlyFederated).then(result => {
+                        document.getElementById("scoreResult").innerHTML = 
+                        result.error ? "Failed to submit Score." : "Score submitted successfully.";
+                    });
+                })
+                .catch(err => {
+                    document.getElementById("greeting").innerHTML = err;
+                });
+            });
+           
+            // Call to explicitly close your app.    
+            // Litemint.close();
+
+        });
+    </script>
+</body>
+</html>
