@@ -9,6 +9,7 @@
 
 // Litemint API.
 (function (namespace) {
+    let apiKey; // API Key for server calls.
 
     namespace.endPoint = "https://api.litemint.com";
 
@@ -48,7 +49,7 @@
                 }
             }
             const purpose = token.substring(0, token.length - 16);
-            const url = namespace.endPoint + "/.auth/submitscore?token=" + token + "&score=" + score + "&purpose=" + purpose + (onlyFederated ? "" : "&type=weak");
+            const url = namespace.endPoint + "/.auth/submitscore?token=" + token + "&score=" + score + "&purpose=" + purpose + (onlyFederated ? "" : "&type=weak") + (apiKey ? "&key=" + apiKey : "");
             request.open("GET", url, true);
             request.send(null);
         });
@@ -73,7 +74,8 @@
         });
     };
 
-    namespace.initialize = function () {
+    namespace.initialize = function (key) {
+        apiKey = key;
         if (parent) {
             parent.postMessage("litemint_app_ready", "*");
         }
