@@ -4,7 +4,7 @@
 
 The Litemint API client library for javaScript client-application developers to integrate apps and games on the Litemint platform.
 
-> Note: Contact hello@litemint.com to get your `APP ID` and to submit your app.
+> Note: Contact hello@litemint.com to get your `APP ID` and `API KEY` to submit your app.
 
 ## Features
 
