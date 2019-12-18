@@ -29,6 +29,7 @@ Usage
 #### Initialize the app once:
 
 ```js
+// Optional: Initialize with API key.
 Litemint.initialize();
 ```
 
